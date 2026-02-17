@@ -30,22 +30,54 @@
         }
         h2 { color: #00e676; text-align: center; margin-bottom: 5px; font-size: 26px; }
         .subtitle { text-align: center; color: #888; font-size: 12px; margin-bottom: 20px; }
-        label { display: block; margin-top: 15px; color: #00e676; font-size: 13px; font-weight: bold; text-transform: uppercase; }
+        
+        label { display: block; margin-top: 15px; color: #00e676; font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        
         input { 
-            width: 100%; padding: 15px; margin-top: 5px; border-radius: 12px; border: 2px solid #2c2c2c; 
-            font-size: 18px; background: #212121; color: #fff; box-sizing: border-box; outline: none;
+            width: 100%; 
+            padding: 15px; 
+            margin-top: 5px; 
+            border-radius: 12px; 
+            border: 2px solid #2c2c2c; 
+            font-size: 18px; 
+            background: #212121; 
+            color: #fff; 
+            box-sizing: border-box;
+            transition: 0.3s;
+            outline: none;
         }
-        input:focus { border-color: #00e676; }
+        input:focus { border-color: #00e676; background: #252525; }
+
         .button-group { display: flex; gap: 10px; margin-top: 25px; }
+        
         button { 
-            flex: 2; padding: 18px; background: #00e676; color: #000; border: none; 
-            border-radius: 12px; font-weight: 800; font-size: 16px; cursor: pointer; 
+            flex: 2;
+            padding: 18px; 
+            background: #00e676; 
+            color: #000; 
+            border: none; 
+            border-radius: 12px; 
+            font-weight: 800; 
+            font-size: 16px; 
+            cursor: pointer; 
+            transition: 0.2s;
         }
-        .btn-clear { flex: 1; background: #333; color: #fff; }
+        .btn-clear { 
+            flex: 1;
+            background: #333; 
+            color: #fff;
+        }
+        button:active { transform: scale(0.95); }
+
         .res-box { 
-            background: #212121; padding: 20px; margin-top: 25px; border-radius: 15px; 
-            text-align: center; border: 1px dashed #444;
+            background: #212121; 
+            padding: 20px; 
+            margin-top: 25px; 
+            border-radius: 15px; 
+            text-align: center;
+            border: 1px dashed #444;
         }
+        .res-title { font-size: 13px; color: #888; margin: 0; text-transform: uppercase; }
         .res-amount { color: #00e676; margin: 5px 0 15px 0; font-size: 35px; font-weight: bold; }
         .res-bs { color: #40c4ff; font-size: 26px; margin: 5px 0; font-weight: bold; }
     </style>
@@ -54,7 +86,7 @@
 
 <div class="container">
     <h2>Gasolina Vzla</h2>
-    <p class="subtitle">Calculadora de Combustible</p>
+    <p class="subtitle">Calculadora con Memoria</p>
     
     <label>Litros Suministrados:</label>
     <input type="number" id="litros" placeholder="Ej: 40" inputmode="decimal">
@@ -63,7 +95,7 @@
     <input type="number" id="precio" placeholder="Ej: 0.50" inputmode="decimal" step="any">
 
     <label>Tasa BCV del día:</label>
-    <input type="number" id="tasaBCV" placeholder="Ej: 37.50" inputmode="decimal" step="any">
+    <input type="number" id="tasaBCV" placeholder="Ej: 38.50" inputmode="decimal" step="any">
 
     <div class="button-group">
         <button onclick="calcular()">CALCULAR</button>
@@ -71,30 +103,54 @@
     </div>
 
     <div class="res-box">
+        <p class="res-title">Total en Dólares</p>
         <div id="totalUSD" class="res-amount">$ 0.00</div>
+        
+        <p class="res-title">Total en Bolívares</p>
         <div id="totalBS" class="res-bs">Bs. 0,00</div>
     </div>
 </div>
 
 <script>
+    // Al cargar la página, recuperamos los datos guardados
+    window.onload = function() {
+        if (localStorage.getItem('gasVzla_tasa')) {
+            document.getElementById('tasaBCV').value = localStorage.getItem('gasVzla_tasa');
+        }
+        if (localStorage.getItem('gasVzla_precio')) {
+            document.getElementById('precio').value = localStorage.getItem('gasVzla_precio');
+        }
+    }
+
     function calcular() {
         const L = parseFloat(document.getElementById('litros').value) || 0;
         let P = parseFloat(document.getElementById('precio').value) || 0;
         const T = parseFloat(document.getElementById('tasaBCV').value) || 0;
-        if (P >= 10) P = P / 100;
+
+        // Guardamos la tasa y el precio en la memoria del celular
+        localStorage.setItem('gasVzla_tasa', T);
+        localStorage.setItem('gasVzla_precio', P);
+
+        // Lógica de centavos vs dólares
+        if (P >= 10) {
+            P = P / 100;
+        }
+
         const totalDolar = L * P;
         const totalBs = totalDolar * T;
+
         document.getElementById('totalUSD').innerText = '$ ' + totalDolar.toFixed(2);
-        document.getElementById('totalBS').innerText = 'Bs. ' + totalBs.toLocaleString('es-VE', {minimumFractionDigits: 2});
+        document.getElementById('totalBS').innerText = 'Bs. ' + totalBs.toLocaleString('es-VE', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     }
 
     function limpiar() {
+        // Solo borramos los litros y los resultados
+        // Mantenemos Precio y Tasa porque suelen ser los mismos en una jornada
         document.getElementById('litros').value = "";
-        document.getElementById('precio').value = "";
-        document.getElementById('tasaBCV').value = "";
         document.getElementById('totalUSD').innerText = "$ 0.00";
         document.getElementById('totalBS').innerText = "Bs. 0,00";
     }
 </script>
+
 </body>
 </html>
