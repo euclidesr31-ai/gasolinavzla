@@ -9,16 +9,18 @@
         :root { --primary: #00e676; --bg: #0f0f0f; --card: #181818; --blue: #0d47a1; --danger: #ff5252; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #e0e0e0; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         
-        /* Header y Botón ⋮ */
+        /* Header */
         .header { width: 100%; max-width: 400px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; position: relative; }
-        .menu-dots { font-size: 32px; cursor: pointer; color: var(--primary); padding: 10px; line-height: 1; z-index: 100; }
+        .menu-dots { font-size: 32px; cursor: pointer; color: var(--primary); padding: 10px; z-index: 100; }
         
+        /* Contenedor Principal */
         .container { width: 100%; max-width: 400px; background: var(--card); padding: 25px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.7); border: 1px solid #333; box-sizing: border-box; }
         label { display: block; margin-top: 15px; color: var(--primary); font-size: 11px; font-weight: bold; text-transform: uppercase; }
-        input { width: 100%; padding: 15px; margin-top: 5px; border-radius: 12px; border: 2px solid #2c2c2c; font-size: 18px; background: #212121; color: #fff; box-sizing: border-box; outline: none; }
+        input { width: 100%; padding: 15px; margin-top: 5px; border-radius: 12px; border: 2px solid #2c2c2c; font-size: 18px; background: #212121; color: #fff; box-sizing: border-box; outline: none; width: 100%; }
         
         .button-group { display: flex; gap: 8px; margin-top: 25px; }
-        button { flex: 2; padding: 18px; border: none; border-radius: 12px; font-weight: 800; font-size: 14px; cursor: pointer; }
+        button { flex: 2; padding: 18px; border: none; border-radius: 12px; font-weight: 800; font-size: 14px; cursor: pointer; transition: 0.2s; }
+        button:active { transform: scale(0.98); opacity: 0.8; }
         .btn-calc { background: var(--primary); color: #000; }
         .btn-save { flex: 0.6; background: #1a237e; color: white; font-size: 20px; }
         .btn-clear { flex: 1; background: #333; color: #fff; }
@@ -27,19 +29,20 @@
         .res-amount { color: var(--primary); font-size: 32px; font-weight: bold; }
         .res-bs { color: #40c4ff; font-size: 24px; font-weight: bold; margin-top: 5px; }
 
+        /* Denuncias */
         .denuncia-box { width: 100%; max-width: 400px; margin-top: 20px; background: #1a1a1a; padding: 15px; border-radius: 15px; border: 1px solid var(--danger); box-sizing: border-box; }
         .denuncia-title { color: var(--danger); font-size: 10px; font-weight: bold; text-align: center; margin-bottom: 10px; }
         .denuncia-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #333; font-size: 12px; }
         .telefono { color: #fff; text-decoration: none; font-weight: bold; background: #b71c1c; padding: 6px 12px; border-radius: 8px; font-size: 11px; }
 
-        /* MENU LATERAL - REVISADO */
-        #drawer { position: fixed; top: 0; right: -100%; width: 85%; max-width: 320px; height: 100%; background: #1a1a1a; transition: 0.3s ease-out; z-index: 2000; padding: 20px; box-sizing: border-box; overflow-y: auto; box-shadow: -5px 0 20px rgba(0,0,0,0.8); }
+        /* Menú Lateral (Drawer) */
+        #drawer { position: fixed; top: 0; right: -100%; width: 85%; max-width: 320px; height: 100%; background: #151515; transition: 0.3s ease-in-out; z-index: 2000; padding: 25px; box-sizing: border-box; overflow-y: auto; border-left: 1px solid #333; }
         #drawer.active { right: 0; }
-        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 1999; backdrop-filter: blur(2px); }
+        #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 1999; backdrop-filter: blur(3px); }
         #overlay.active { display: block; }
 
-        .oil-card { background: #252525; padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #444; }
-        .progress-container { width: 100%; height: 10px; background: #111; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+        .oil-card { background: #222; padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #333; }
+        .progress-container { width: 100%; height: 8px; background: #000; border-radius: 10px; margin: 10px 0; overflow: hidden; }
         #oilBar { height: 100%; width: 0%; background: var(--primary); transition: 0.5s; }
 
         .monthly-card { background: linear-gradient(135deg, #1a237e, #0d47a1); padding: 15px; border-radius: 15px; margin-bottom: 20px; position: relative; }
@@ -48,36 +51,28 @@
         .stat-val { display: block; font-size: 18px; font-weight: bold; }
         .stat-lab { font-size: 9px; color: #bbdefb; }
 
-        .profile-input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #333; background: #111; color: white; font-size: 14px; box-sizing: border-box; }
-        .history-item { background: #252525; padding: 15px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid var(--primary); position: relative; }
+        .profile-input { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 10px; border: 1px solid #333; background: #000; color: white; font-size: 14px; box-sizing: border-box; }
+        .history-item { background: #222; padding: 15px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid var(--primary); position: relative; }
         .btn-wa { position: absolute; right: 10px; bottom: 10px; background: #25D366; border: none; border-radius: 50%; width: 32px; height: 32px; color: white; display: flex; align-items: center; justify-content: center; }
-
-        @media print {
-            body * { visibility: hidden; }
-            #printArea, #printArea * { visibility: visible; }
-            #printArea { position: absolute; left: 0; top: 0; width: 100%; color: black; background: white; padding: 20px; }
-        }
     </style>
 </head>
 <body>
 
-<div id="printArea" style="display:none;"></div>
-
 <div class="header">
     <div>
-        <h2 style="font-size: 22px;">Gasolina Vzla</h2>
-        <div class="subtitle" id="saludoApp">Monitor de Combustible</div>
+        <h2 style="font-size: 22px; margin:0;">Gasolina Vzla</h2>
+        <div class="subtitle" id="saludoApp" style="color:#888; font-size:12px;">Monitor de Combustible</div>
     </div>
     <div class="menu-dots" onclick="toggleMenu()">⋮</div>
 </div>
 
 <div class="container">
     <label>Litros:</label>
-    <input type="number" id="litros" placeholder="40" inputmode="decimal">
-    <label>Precio USD:</label>
+    <input type="number" id="litros" placeholder="Ej: 40" inputmode="decimal">
+    <label>Precio USD (0.50):</label>
     <input type="number" id="precio" placeholder="0.50" inputmode="decimal">
     <label>Tasa BCV:</label>
-    <input type="number" id="tasaBCV" placeholder="38.50" inputmode="decimal">
+    <input type="number" id="tasaBCV" placeholder="Ej: 36.50" inputmode="decimal">
 
     <div class="button-group">
         <button class="btn-calc" onclick="calcular()">CALCULAR</button>
@@ -100,8 +95,8 @@
 <div id="overlay" onclick="toggleMenu()"></div>
 <div id="drawer">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h3 style="color:var(--primary); margin:0;">Perfil</h3>
-        <span onclick="toggleMenu()" style="cursor:pointer; font-size:24px;">✕</span>
+        <h3 style="color:var(--primary); margin:0;">Mi Perfil</h3>
+        <span onclick="toggleMenu()" style="cursor:pointer; font-size:20px;">✕</span>
     </div>
     
     <div class="oil-card">
@@ -119,27 +114,26 @@
         </div>
     </div>
 
-    <div style="background:#111; padding:15px; border-radius:12px; margin-bottom:20px;">
-        <input type="text" id="pNombre" class="profile-input" placeholder="Tu nombre">
+    <div style="background:#000; padding:15px; border-radius:12px; margin-bottom:20px; border:1px solid #333;">
+        <input type="text" id="pNombre" class="profile-input" placeholder="Nombre">
         <input type="text" id="pVehiculo" class="profile-input" placeholder="Vehículo">
         <input type="number" id="pKm" class="profile-input" placeholder="Km Actual">
-        <input type="number" id="pOilKm" class="profile-input" placeholder="Km Cambio">
-        <button onclick="guardarPerfil()" style="background:var(--primary); color:black; width:100%; padding:10px; border-radius:8px; font-weight:bold; border:none; font-size:12px;">GUARDAR DATOS</button>
+        <input type="number" id="pOilKm" class="profile-input" placeholder="Km Próximo Cambio">
+        <button onclick="guardarPerfil()" style="background:var(--primary); color:black; width:100%; padding:12px; border-radius:8px; font-weight:bold; border:none; font-size:12px;">ACTUALIZAR PERFIL</button>
     </div>
 
     <div id="listaHistorial"></div>
-    <button onclick="borrarHistorial()" style="background:var(--danger); color:white; width:100%; padding:10px; margin-top:20px; border:none; border-radius:8px; font-size:11px;">BORRAR HISTORIAL</button>
+    <button onclick="borrarHistorial()" style="background:var(--danger); color:white; width:100%; padding:12px; margin-top:20px; border:none; border-radius:8px; font-size:12px; font-weight:bold;">BORRAR HISTORIAL</button>
 </div>
 
 <script>
-    // FUNCION CLAVE: DEBE ESTAR DISPONIBLE GLOBALMENTE
+    // 1. NAVEGACIÓN
     function toggleMenu() {
-        const d = document.getElementById('drawer');
-        const o = document.getElementById('overlay');
-        d.classList.toggle('active');
-        o.classList.toggle('active');
+        document.getElementById('drawer').classList.toggle('active');
+        document.getElementById('overlay').classList.toggle('active');
     }
 
+    // 2. INICIO
     window.onload = function() {
         if (localStorage.getItem('gasVzla_tasa')) document.getElementById('tasaBCV').value = localStorage.getItem('gasVzla_tasa');
         if (localStorage.getItem('gasVzla_precio')) document.getElementById('precio').value = localStorage.getItem('gasVzla_precio');
@@ -151,6 +145,7 @@
         }
     }
 
+    // 3. LOGICA PERFIL
     function guardarPerfil() {
         const p = {
             nombre: document.getElementById('pNombre').value,
@@ -160,7 +155,7 @@
         };
         localStorage.setItem('gasVzla_perfil', JSON.stringify(p));
         cargarPerfil();
-        alert("Perfil actualizado.");
+        alert("¡Perfil guardado!");
     }
 
     function cargarPerfil() {
@@ -176,33 +171,37 @@
                 const diff = p.oilKm - p.km;
                 const porc = Math.max(0, Math.min(100, (diff / 5000) * 100));
                 document.getElementById('oilBar').style.width = porc + "%";
-                document.getElementById('oilKmRestante').innerText = diff + " Km";
+                document.getElementById('oilKmRestante').innerText = diff + " Km restantes";
                 document.getElementById('oilBar').style.background = porc < 20 ? "var(--danger)" : "var(--primary)";
+                document.getElementById('oilMsg').innerText = porc < 20 ? "¡Cambio Necesario!" : "Aceite en buen estado";
             }
         }
     }
 
+    // 4. CALCULADORA
     function calcular() {
         const L = parseFloat(document.getElementById('litros').value) || 0;
         let P = parseFloat(document.getElementById('precio').value) || 0;
         const T = parseFloat(document.getElementById('tasaBCV').value) || 0;
+        localStorage.setItem('gasVzla_tasa', T);
+        localStorage.setItem('gasVzla_precio', P);
         if (P >= 10) P = P / 100;
-        const d = L * P;
-        const b = d * T;
-        document.getElementById('totalUSD').innerText = '$ ' + d.toFixed(2);
-        document.getElementById('totalBS').innerText = 'Bs. ' + b.toLocaleString('es-VE', {minimumFractionDigits: 2});
+        const usd = L * P;
+        const bs = usd * T;
+        document.getElementById('totalUSD').innerText = '$ ' + usd.toFixed(2);
+        document.getElementById('totalBS').innerText = 'Bs. ' + bs.toLocaleString('es-VE', {minimumFractionDigits: 2});
     }
 
     function guardarRegistro() {
         const L = document.getElementById('litros').value;
         const u = document.getElementById('totalUSD').innerText;
         const b = document.getElementById('totalBS').innerText;
-        if (!L || u === "$ 0.00") return;
+        if (!L || u === "$ 0.00") return alert("Realiza un cálculo primero");
         const h = JSON.parse(localStorage.getItem('gasVzla_historial')) || [];
         h.unshift({ fecha: new Date().toLocaleString(), litros: L, usd: u, bs: b });
         localStorage.setItem('gasVzla_historial', JSON.stringify(h));
         cargarHistorial();
-        alert("Guardado.");
+        alert("¡Registro guardado!");
     }
 
     function cargarHistorial() {
@@ -222,67 +221,42 @@
         const lista = document.getElementById('listaHistorial');
         lista.innerHTML = h.map(i => `
             <div class="history-item">
-                <small>${i.fecha}</small><br>
-                <strong>${i.litros}L</strong> - ${i.usd}<br>
+                <small style="color:#888">${i.fecha}</small><br>
+                <strong>${i.litros}L</strong> | ${i.usd}<br>
                 <button class="btn-wa" onclick="window.open('https://wa.me/?text=${encodeURIComponent('⛽ '+i.litros+'L - '+i.usd)}', '_blank')">📲</button>
             </div>
-        `).join('') || '<p style="text-align:center;font-size:12px;">Sin registros</p>';
+        `).join('') || '<p style="text-align:center;font-size:12px;color:#666;">Sin movimientos.</p>';
     }
 
+    // 5. PDF REVISADO PARA CELULARES
     function generarReportePDF() {
-    const h = JSON.parse(localStorage.getItem('gasVzla_historial')) || [];
-    const p = JSON.parse(localStorage.getItem('gasVzla_perfil')) || { nombre: "Usuario", vehiculo: "Vehículo" };
-    
-    if (h.length === 0) return alert("No hay datos para exportar.");
+        const h = JSON.parse(localStorage.getItem('gasVzla_historial')) || [];
+        const p = JSON.parse(localStorage.getItem('gasVzla_perfil')) || { nombre: "Usuario", vehiculo: "Vehículo" };
+        if(h.length === 0) return alert("No hay datos.");
 
-    const area = document.getElementById('printArea');
-    
-    // Crear una tabla limpia y estética para el PDF
-    let filas = h.map(i => `
-        <tr style="border-bottom: 1px solid #ddd;">
-            <td style="padding: 10px; font-size: 12px;">${i.fecha}</td>
-            <td style="padding: 10px; font-size: 12px; text-align: center;">${i.litros}L</td>
-            <td style="padding: 10px; font-size: 12px; text-align: right;">${i.usd}</td>
-            <td style="padding: 10px; font-size: 12px; text-align: right;">${i.bs}</td>
-        </tr>
-    `).join('');
+        let filas = h.map(i => `<tr><td style="border:1px solid #ddd;padding:8px;">${i.fecha}</td><td style="border:1px solid #ddd;padding:8px;text-align:center;">${i.litros}L</td><td style="border:1px solid #ddd;padding:8px;text-align:right;">${i.usd}</td></tr>`).join('');
 
-    area.innerHTML = `
-        <div style="padding: 30px; font-family: Arial, sans-serif; color: #333;">
-            <h1 style="color: #0d47a1; margin-bottom: 5px;">Reporte de Combustible</h1>
-            <p style="margin: 0; font-size: 14px;"><strong>Conductor:</strong> ${p.nombre}</p>
-            <p style="margin: 0; font-size: 14px; margin-bottom: 20px;"><strong>Vehículo:</strong> ${p.vehiculo}</p>
-            
-            <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-                <thead>
-                    <tr style="background-color: #f2f2f2; border-bottom: 2px solid #0d47a1;">
-                        <th style="padding: 12px; text-align: left;">Fecha</th>
-                        <th style="padding: 12px; text-align: center;">Litros</th>
-                        <th style="padding: 12px; text-align: right;">Monto USD</th>
-                        <th style="padding: 12px; text-align: right;">Monto Bs.</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${filas}
-                </tbody>
+        const contenido = `<html><head><title>PDF</title></head><body style="font-family:sans-serif;padding:20px;">
+            <h1 style="color:#0d47a1;">Reporte Gasolina Vzla</h1>
+            <p><strong>Conductor:</strong> ${p.nombre} | <strong>Vehículo:</strong> ${p.vehiculo}</p>
+            <table style="width:100%;border-collapse:collapse;">
+                <tr style="background:#eee;"><th>Fecha</th><th>Litros</th><th>USD</th></tr>
+                ${filas}
             </table>
-            <div style="margin-top: 30px; font-size: 10px; color: #777; text-align: center;">
-                Generado por Gasolina Vzla App - ${new Date().toLocaleDateString()}
-            </div>
-        </div>
-    `;
+            <script>window.onload=function(){setTimeout(function(){window.print();},500);};<\/script>
+            </body></html>`;
 
-    // El truco está aquí: mostrar el área y esperar 500ms para asegurar que el navegador cargue el contenido
-    area.style.display = 'block';
-    
-    setTimeout(() => {
-        window.print();
-        area.style.display = 'none'; // Volver a ocultar después de imprimir
-    }, 500);
-}
+        const win = window.open('', '_blank');
+        win.document.write(contenido);
+        win.document.close();
+    }
 
-    function borrarHistorial() { if(confirm("¿Borrar?")) { localStorage.removeItem('gasVzla_historial'); cargarHistorial(); } }
-    function limpiar() { document.getElementById('litros').value = ""; }
+    function borrarHistorial() { if(confirm("¿Borrar todo?")) { localStorage.removeItem('gasVzla_historial'); cargarHistorial(); } }
+    function limpiar() { document.getElementById('litros').value = ""; document.getElementById('totalUSD').innerText = "$ 0.00"; document.getElementById('totalBS').innerText = "Bs. 0,00"; }
 </script>
 </body>
 </html>
+</script>
+</body>
+</html>
+
