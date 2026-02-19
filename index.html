@@ -6,66 +6,76 @@
     <meta name="theme-color" content="#121212">
     <title>Gasolina Vzla</title>
     <style>
-        :root { --primary: #00e676; --bg: #0f0f0f; --card: #181818; --blue: #0d47a1; }
+        :root { --primary: #00e676; --bg: #0f0f0f; --card: #181818; --blue: #0d47a1; --danger: #ff5252; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #e0e0e0; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
         
+        /* Interfaz Principal */
         .header { width: 100%; max-width: 400px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .menu-dots { font-size: 28px; cursor: pointer; color: var(--primary); padding: 5px; }
-
         .container { width: 100%; max-width: 400px; background: var(--card); padding: 25px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.7); border: 1px solid #333; box-sizing: border-box; }
-        h2 { color: var(--primary); margin: 0; font-size: 26px; }
-        .subtitle { color: #888; font-size: 12px; margin-bottom: 20px; }
-        
-        label { display: block; margin-top: 15px; color: var(--primary); font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        label { display: block; margin-top: 15px; color: var(--primary); font-size: 11px; font-weight: bold; text-transform: uppercase; }
         input { width: 100%; padding: 15px; margin-top: 5px; border-radius: 12px; border: 2px solid #2c2c2c; font-size: 18px; background: #212121; color: #fff; box-sizing: border-box; outline: none; }
-        input:focus { border-color: var(--primary); }
-
         .button-group { display: flex; gap: 8px; margin-top: 25px; }
         button { flex: 2; padding: 18px; border: none; border-radius: 12px; font-weight: 800; font-size: 14px; cursor: pointer; }
         .btn-calc { background: var(--primary); color: #000; }
         .btn-save { flex: 0.6; background: #1a237e; color: white; font-size: 20px; }
         .btn-clear { flex: 1; background: #333; color: #fff; }
-
         .res-box { background: #212121; padding: 20px; margin-top: 25px; border-radius: 15px; text-align: center; border: 1px dashed #444; }
         .res-amount { color: var(--primary); font-size: 32px; font-weight: bold; }
         .res-bs { color: #40c4ff; font-size: 24px; font-weight: bold; margin-top: 5px; }
 
-        .drawer { position: fixed; top: 0; right: -100%; width: 85%; max-width: 320px; height: 100%; background: #1a1a1a; box-shadow: -5px 0 15px rgba(0,0,0,0.5); transition: 0.3s; z-index: 1000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
+        /* Estilos Menú Lateral (Drawer) */
+        .drawer { position: fixed; top: 0; right: -100%; width: 85%; max-width: 320px; height: 100%; background: #1a1a1a; transition: 0.3s; z-index: 1000; padding: 20px; box-sizing: border-box; overflow-y: auto; }
         .drawer.active { right: 0; }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; z-index: 999; }
         .overlay.active { display: block; }
         
-        /* Estilos Perfil */
-        .profile-section { background: #252525; padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #444; }
-        .profile-section h4 { margin: 0 0 10px 0; color: var(--primary); font-size: 12px; text-transform: uppercase; }
-        .profile-input { width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px; border: 1px solid #444; background: #1a1a1a; color: white; font-size: 13px; }
+        /* Barra de Aceite */
+        .oil-card { background: #252525; padding: 15px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #444; }
+        .progress-container { width: 100%; height: 10px; background: #111; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+        #oilBar { height: 100%; width: 0%; background: var(--primary); transition: 0.5s; }
 
-        .monthly-card { background: linear-gradient(135deg, #1a237e, #0d47a1); padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: center; }
-        .stats { display: flex; justify-content: space-around; margin-top: 10px; }
+        /* Tarjeta Azul Resumen + Botón PDF */
+        .monthly-card { background: linear-gradient(135deg, #1a237e, #0d47a1); padding: 15px; border-radius: 15px; margin-bottom: 20px; position: relative; }
+        .btn-pdf-small { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.2); color: white; border: none; padding: 5px 10px; border-radius: 5px; font-size: 10px; cursor: pointer; }
+        .stats { display: flex; justify-content: space-around; text-align: center; margin-top: 10px; }
         .stat-val { display: block; font-size: 18px; font-weight: bold; }
         .stat-lab { font-size: 9px; color: #bbdefb; }
 
+        .profile-input { width: 100%; padding: 10px; margin-bottom: 8px; border-radius: 8px; border: 1px solid #333; background: #111; color: white; font-size: 13px; }
+
         .history-item { background: #252525; padding: 15px; border-radius: 12px; margin-bottom: 12px; border-left: 4px solid var(--primary); position: relative; }
-        .btn-wa { position: absolute; right: 10px; bottom: 10px; background: #25D366; border: none; border-radius: 50%; width: 32px; height: 32px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .btn-wa { position: absolute; right: 10px; bottom: 10px; background: #25D366; border: none; border-radius: 50%; width: 32px; height: 32px; color: white; display: flex; align-items: center; justify-content: center; }
+
+        /* Estilo Impresión */
+        @media print {
+            body * { visibility: hidden; }
+            #printArea, #printArea * { visibility: visible; }
+            #printArea { position: absolute; left: 0; top: 0; width: 100%; color: black; background: white; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+            th, td { border: 1px solid #333; padding: 8px; text-align: left; }
+        }
     </style>
 </head>
 <body>
 
+<div id="printArea" style="display:none;"></div>
+
 <div class="header">
     <div>
-        <h2>Gasolina Vzla</h2>
-        <div class="subtitle" id="saludoApp">Gestión de Combustible</div>
+        <h2 style="font-size: 22px;">Gasolina Vzla</h2>
+        <div class="subtitle" id="saludoApp">Monitor de Combustible</div>
     </div>
     <div class="menu-dots" onclick="toggleMenu()">⋮</div>
 </div>
 
 <div class="container">
     <label>Litros:</label>
-    <input type="number" id="litros" placeholder="Ej: 40" inputmode="decimal">
+    <input type="number" id="litros" placeholder="40" inputmode="decimal">
     <label>Precio USD:</label>
     <input type="number" id="precio" placeholder="0.50" inputmode="decimal">
     <label>Tasa BCV:</label>
-    <input type="number" id="tasaBCV" placeholder="Ej: 38.50" inputmode="decimal">
+    <input type="number" id="tasaBCV" placeholder="38.50" inputmode="decimal">
 
     <div class="button-group">
         <button class="btn-calc" onclick="calcular()">CALCULAR</button>
@@ -83,25 +93,31 @@
 <div class="drawer" id="drawer">
     <h3 style="color:var(--primary); margin-top:0;">Mi Perfil</h3>
     
-    <div class="profile-section">
-        <h4>Datos del Vehículo</h4>
-        <input type="text" id="pNombre" class="profile-input" placeholder="Tu nombre">
-        <input type="text" id="pVehiculo" class="profile-input" placeholder="Modelo (Ej: Corolla)">
-        <input type="number" id="pAnio" class="profile-input" placeholder="Año">
-        <input type="number" id="pKm" class="profile-input" placeholder="Kilometraje actual">
-        <button onclick="guardarPerfil()" style="background:var(--primary); color:black; width:100%; padding:8px; border-radius:8px; font-weight:bold; border:none; font-size:12px;">ACTUALIZAR PERFIL</button>
+    <div class="oil-card">
+        <div style="display:flex; justify-content:space-between; font-size:10px; color:#888;"><span>VIDA DEL ACEITE</span><span id="oilKmRestante">---</span></div>
+        <div class="progress-container"><div id="oilBar"></div></div>
+        <div id="oilMsg" style="font-size:11px; text-align:center; font-weight:bold;">Configura tu kilometraje</div>
     </div>
 
     <div class="monthly-card">
-        <h4 id="nombreMes">Resumen Mensual</h4>
+        <button class="btn-pdf-small" onclick="generarReportePDF()">PDF 📑</button>
+        <h4 id="nombreMes" style="margin:0; font-size:11px; color:#40c4ff;">RESUMEN MENSUAL</h4>
         <div class="stats">
             <div><span class="stat-val" id="totalLitrosMes">0L</span><span class="stat-lab">LITROS</span></div>
-            <div><span class="stat-val" id="totalUSDMes">$0</span><span class="stat-lab">TOTAL USD</span></div>
+            <div><span class="stat-val" id="totalUSDMes">$0</span><span class="stat-lab">USD TOTAL</span></div>
         </div>
     </div>
 
+    <div style="background:#111; padding:15px; border-radius:12px; margin-bottom:20px;">
+        <input type="text" id="pNombre" class="profile-input" placeholder="Tu nombre">
+        <input type="text" id="pVehiculo" class="profile-input" placeholder="Vehículo (Ej: Corolla)">
+        <input type="number" id="pKm" class="profile-input" placeholder="Km Actual">
+        <input type="number" id="pOilKm" class="profile-input" placeholder="Km Próximo Cambio">
+        <button onclick="guardarPerfil()" style="background:var(--primary); color:black; width:100%; padding:8px; border-radius:8px; font-weight:bold; border:none; font-size:11px; margin-top:5px;">ACTUALIZAR DATOS</button>
+    </div>
+
     <div id="listaHistorial"></div>
-    <button onclick="borrarHistorial()" style="background:#b71c1c; color:white; width:100%; padding:12px; margin-top:20px; border:none; border-radius:8px;">BORRAR TODO</button>
+    <button onclick="borrarHistorial()" style="background:var(--danger); color:white; width:100%; padding:10px; margin-top:20px; border:none; border-radius:8px; font-size:11px;">BORRAR HISTORIAL</button>
 </div>
 
 <script>
@@ -121,12 +137,12 @@
         const perfil = {
             nombre: document.getElementById('pNombre').value,
             vehiculo: document.getElementById('pVehiculo').value,
-            anio: document.getElementById('pAnio').value,
-            km: document.getElementById('pKm').value
+            km: parseFloat(document.getElementById('pKm').value) || 0,
+            oilKm: parseFloat(document.getElementById('pOilKm').value) || 0
         };
         localStorage.setItem('gasVzla_perfil', JSON.stringify(perfil));
-        alert("Perfil actualizado");
         cargarPerfil();
+        alert("Perfil actualizado.");
     }
 
     function cargarPerfil() {
@@ -134,9 +150,18 @@
         if(p) {
             document.getElementById('pNombre').value = p.nombre || "";
             document.getElementById('pVehiculo').value = p.vehiculo || "";
-            document.getElementById('pAnio').value = p.anio || "";
             document.getElementById('pKm').value = p.km || "";
+            document.getElementById('pOilKm').value = p.oilKm || "";
             if(p.nombre) document.getElementById('saludoApp').innerText = "Hola, " + p.nombre;
+            
+            if(p.oilKm > 0 && p.km > 0) {
+                const diff = p.oilKm - p.km;
+                const porcentaje = Math.max(0, Math.min(100, (diff / 5000) * 100));
+                document.getElementById('oilBar').style.width = porcentaje + "%";
+                document.getElementById('oilKmRestante').innerText = diff + " Km";
+                document.getElementById('oilMsg').innerText = porcentaje < 20 ? "¡Cambio Urgente!" : "Aceite en buen estado";
+                document.getElementById('oilBar').style.background = porcentaje < 20 ? "var(--danger)" : "var(--primary)";
+            }
         }
     }
 
@@ -157,13 +182,13 @@
         const L = document.getElementById('litros').value;
         const usd = document.getElementById('totalUSD').innerText;
         const bs = document.getElementById('totalBS').innerText;
-        if (!L || usd === "$ 0.00") { alert("Calcula primero."); return; }
+        if (!L || usd === "$ 0.00") return;
         const reg = { fecha: new Date().toLocaleString(), litros: L, usd: usd, bs: bs };
         let h = JSON.parse(localStorage.getItem('gasVzla_historial')) || [];
         h.unshift(reg);
         localStorage.setItem('gasVzla_historial', JSON.stringify(h));
         cargarHistorial();
-        alert("Guardado");
+        alert("Registro guardado.");
     }
 
     function cargarHistorial() {
@@ -171,6 +196,8 @@
         const h = JSON.parse(localStorage.getItem('gasVzla_historial')) || [];
         const mesActual = new Date().getMonth();
         let lMes = 0, uMes = 0;
+        const meses = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+        document.getElementById('nombreMes').innerText = "RESUMEN DE " + meses[mesActual].toUpperCase();
 
         h.forEach(r => {
             const f = new Date(r.fecha.split(',')[0].split('/').reverse().join('-') || r.fecha);
@@ -182,14 +209,24 @@
         document.getElementById('totalLitrosMes').innerText = lMes.toFixed(1) + "L";
         document.getElementById('totalUSDMes').innerText = "$" + uMes.toFixed(2);
 
-        if (h.length === 0) { lista.innerHTML = '<p style="color:#666; text-align:center;">Sin historial.</p>'; return; }
+        if (h.length === 0) { lista.innerHTML = '<p style="color:#666; font-size:12px; text-align:center;">Sin registros.</p>'; return; }
         lista.innerHTML = h.map(i => `
             <div class="history-item">
-                <div style="font-size:10px; color:#888">${i.fecha}</div>
-                <strong>${i.litros} Litros</strong><br><span>${i.usd} / ${i.bs}</span>
+                <div style="font-size:9px; color:#888">${i.fecha}</div>
+                <strong>${i.litros} Litros</strong><br><span style="font-size:12px">${i.usd} / ${i.bs}</span>
                 <button class="btn-wa" onclick="window.open('https://wa.me/?text=${encodeURIComponent('*REPORTE*\n⛽ '+i.litros+'L\n💵 '+i.usd)}', '_blank')">📲</button>
             </div>
         `).join('');
+    }
+
+    function generarReportePDF() {
+        const h = JSON.parse(localStorage.getItem('gasVzla_historial')) || [];
+        const p = JSON.parse(localStorage.getItem('gasVzla_perfil')) || {};
+        if(h.length === 0) return alert("No hay datos.");
+        let tabla = h.map(i => `<tr><td>${i.fecha}</td><td>${i.litros}L</td><td>${i.usd}</td><td>${i.bs}</td></tr>`).join('');
+        const area = document.getElementById('printArea');
+        area.innerHTML = `<h1>Reporte Gasolina Vzla</h1><p>Usuario: ${p.nombre || '-'}<br>Vehículo: ${p.vehiculo || '-'}</p><table><tr><th>Fecha</th><th>Litros</th><th>USD</th><th>Bs</th></tr>${tabla}</table>`;
+        window.print();
     }
 
     function borrarHistorial() { if(confirm("¿Borrar todo?")) { localStorage.removeItem('gasVzla_historial'); cargarHistorial(); } }
