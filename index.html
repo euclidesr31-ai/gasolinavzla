@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
-<head><link rel="manifest" href="manifest.json?v=2">
+<head>
+    <link rel="manifest" href="manifest.json?v=2">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#121212">
@@ -140,8 +141,11 @@
         cargarPerfil();
         cargarHistorial();
         
+        // Registro del Service Worker para Modo Offline
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./sw.js').catch(e => console.log(e));
+            navigator.serviceWorker.register('./sw.js')
+                .then(() => console.log("Modo Offline listo"))
+                .catch(err => console.log("Error SW:", err));
         }
     }
 
@@ -236,7 +240,7 @@
 
         let filas = h.map(i => `<tr><td style="border:1px solid #ddd;padding:8px;">${i.fecha}</td><td style="border:1px solid #ddd;padding:8px;text-align:center;">${i.litros}L</td><td style="border:1px solid #ddd;padding:8px;text-align:right;">${i.usd}</td></tr>`).join('');
 
-        const contenido = `<html><head><title>PDF</title></head><body style="font-family:sans-serif;padding:20px;">
+        const contenido = `<html><head><title>Reporte GasVzla</title></head><body style="font-family:sans-serif;padding:20px;">
             <h1 style="color:#0d47a1;">Reporte Gasolina Vzla</h1>
             <p><strong>Conductor:</strong> ${p.nombre} | <strong>Vehículo:</strong> ${p.vehiculo}</p>
             <table style="width:100%;border-collapse:collapse;">
@@ -256,9 +260,3 @@
 </script>
 </body>
 </html>
-</script>
-</body>
-</html>
-
-
-
